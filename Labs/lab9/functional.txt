@@ -1,0 +1,149 @@
+﻿#include <iostream>
+#include <iomanip>
+#include <fstream>
+#include <string.h>
+
+using namespace std;
+
+float func (float** matr, int n, int m ) {
+	float sum;
+	for (int i=0; i<n; i++) {
+		for (int j=0; j<m; j++) {
+			sum+=matr [i][j];
+		}
+	}
+	return (sum/((n)*(m)));
+}
+
+int func (char text[]) {
+	int counter=0;
+	for (int i=0; i<strlen(text); i++) {
+		if (isalpha(text[i])) counter++;
+	}
+	return counter;
+}
+
+float sum (float** matr, int n=0, int m=0) {
+	float summ=0;
+	bool l = true;
+	if (n==0 || m==0) {
+		cout << "Function can`t work without parametrs n and m!" << endl;
+	}
+	else {
+		for ( int i=0; i<n; i++) {
+			for (int j=0; j<m; j++){
+				summ += matr [i][j];
+				if (matr [i][j]==0) {
+					l=false;
+					break;
+				}
+			}
+			if (l == false) break;
+		}
+	}
+	return summ;
+}
+	//------------function for reading of matrix from file--------
+float readm (ifstream &fin, int n, int m, float** matr)	{
+	for (int i=0;i<n;i++) {
+    	for (int j = 0 ; j < m ; ++j) {
+        	fin >> matr [i][j];
+		}
+	}
+	return 0;
+}
+
+void outputm (float** matr ,int n, int m) {
+	for (int i = 0;  i < n; i++) {
+		for ( int j = 0; j < m; ++j){
+			cout << setw(4) <<setprecision(3) << matr[i][j] << "    ";
+		}
+		cout << endl;
+	}
+}
+
+//------function for finding of size of matrix-----
+void findsize (ifstream &fin,int &row, int &col){
+
+	int count = 0;// quantity of numbers in file
+	float temp;
+
+	while (!fin.eof())
+	{
+		fin >> temp;
+		count++;
+	}
+
+	//searching of number of elements in the first row
+
+	//go to the begin of file
+	fin.seekg(0, ios::beg);
+	fin.clear();
+
+	int count_space = 0;
+	char symbol;
+	while (!fin.eof())
+	{
+	fin.get(symbol);
+	if (symbol == ' ') count_space++;
+	if (symbol == '\n') break;
+	}
+
+	//go again to the begin of file
+	fin.seekg(0, ios::beg);
+	fin.clear();
+	row = count / (count_space + 1); //quantity of rows
+	col = count_space + 1; // quantity of columns
+}
+
+double sum(double a,...)
+{
+  double *P=&a;
+  double sum=0;
+
+  while (*P)
+   {
+     sum+=(int)(*P);
+     P++;
+   }
+	return sum;
+}
+
+// -------------THE MAIN PROGRAM-------------
+int main()
+{
+	//--------------------WORK WITH FILES-------------------
+	//void BindInput( ifstream & inputChannel );
+	ifstream fin("input.txt");
+	if (!fin.is_open())
+	cout << "This file was found" << endl;
+
+	ofstream fout ("output.txt");
+	if (!fout)
+	cout << "Impossible to open output file" << endl;
+
+	//---------------initialisation of matrix--------------
+
+	int n, m;
+	findsize (fin, n, m);
+
+	float ** matr= new float *[n];
+	for (int i = 0 ; i < n ; ++i ) // initialisation of columns of array
+		matr[i] = new float [m];
+	readm (fin, n, m, matr);
+	cout << "Medium arithmetic of your array from file is: " << func (matr,n,m)<< endl;
+	cout << "Sum of int elements of your array is: " << sum(matr,n,m)<<endl;
+
+
+	cout << "Result of Summing: sum (142.2, -23.0, 14.0, 53.2, 0.0, -23.2, 254, 1000) = " << sum (142.2, -23.0, 14.0, 53.2, 0.0, -23.2, 254, 1000) << endl;
+
+	//==========THE SECOND TASK==========
+	char text[80];
+	cout << endl<< "Input your text: " << endl;
+	cin.getline(text,80);
+	cout << endl << "You have " << func (text) << " letters in your text" << endl;
+
+	for (int i = 0; i < n; i++) {
+        delete [] matr[i];
+    }
+}

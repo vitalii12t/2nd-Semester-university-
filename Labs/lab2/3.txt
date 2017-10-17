@@ -1,0 +1,20 @@
+#include <iostream>
+#include <conio.h>
+#include <math.h>
+#include <iomanip>
+using namespace std;
+
+int main ()
+{
+	float z1,z2,b,d,e;
+	cout <<"Vvedit znachennya b=";
+	cin >> b;
+	d=sqrt(2*b+2*(sqrt(b*b-4)));
+	e=sqrt(b*b-4)+b+2;
+	z1=d/e;
+	z2=1/(sqrt(b+2));
+	cout << "\nZ1="<< setprecision (4) <<z1 << endl;
+	cout << "Z2="<< setprecision (4)<<z2 << endl;
+	getch ();
+return 0;
+}

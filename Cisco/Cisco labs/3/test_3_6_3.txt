@@ -1,0 +1,25 @@
+#include <iostream>
+using namespace std;
+
+void increment (int &a, const int b=NULL)
+{
+	if (b==NULL)
+		a=++a;
+	else
+		a=a+b;
+	cout << "a = "<< a << endl;
+}
+
+int main(void) {
+	int var = 0;
+	for(int i = 0; i < 10; i++)
+	{
+		cout << "i = " << i<< endl<< endl;
+		if(i % 2)
+			increment(var);
+  		else
+   			increment(var,i);
+   	}
+	cout << var <<endl;
+ return 0;
+}

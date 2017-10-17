@@ -1,0 +1,26 @@
+#include <iostream>
+#include <conio.h>
+using namespace std;
+
+int main () {
+	int year;
+	do {
+	cout << "Enter a year: ";
+	cin>> year;
+	if (!(year%4==0))
+		cout << "It is a common year ";
+	else if (!(year%100==0))
+		cout << "It is a leap year ";
+	else if (!(year%400==0))
+		cout << "It is a common year ";
+	else if (year==0)
+  		cout << "\nTHANK YOU. BYE";
+	else cout << "It is a leap year ";	
+	if (!(year==0))
+		cout << "\n\nIf you want to exit write 0" <<endl;
+	cout << "  "  << endl;
+	    }
+  while (!(year==0));
+  getch ();
+  return 0;
+}

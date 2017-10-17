@@ -1,0 +1,41 @@
+#include <iostream>
+#include <string.h>
+#include <cstring>
+#include <ctype.h>
+
+using namespace std;
+
+void del (string &s, int &n, int k) {
+	for ( int i = k; i < n; i++){
+		s [i] = s [i + 1];
+		//cout << " i = " << i << endl;
+		//s [i-1] = ' ';
+		//s [n] = ' ';
+	}
+	k--;
+}
+
+int main() {
+	string s;
+	cout << "Hello, user. Input your text: " << endl;
+	getline (cin, s);
+
+	int i = 0, n = s.length();
+
+	do {
+
+		if ( ( s [i] == ' ') && ( s[i+1] == ' ') ) {
+			//cout << "ii = " << i << endl;
+			while (s[i+1] == ' ') {
+				del ( s , n , (i+1) );
+			}
+		}
+		i++;
+	}
+	while ( (i+1) < n );
+
+	cout << endl << "Your text without unwanted spaces: " << endl << s << endl;
+
+	system ( "pause" );
+	return 0;
+}

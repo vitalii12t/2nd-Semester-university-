@@ -1,0 +1,16 @@
+#include <iostream>
+
+using namespace std;
+
+int main()
+{
+	float zero=0.0, pi=3.141593, Euler=2.718282;
+	float *ptr=&Euler;
+	cout << &zero << " = " << zero << " = " << *(ptr+2) << endl;
+	cout << &pi << " = " << pi << " = " << *(ptr+1) << endl;
+	cout << &Euler << " = " << Euler << " = " << *(ptr) << endl<<endl;
+
+	cout << (ptr+2) << " = " << "(ptr+2)" << " = " << *(ptr+2) << endl;
+	cout << (ptr+1) << " = " << "(ptr+1)" << " = " << *(ptr+1) << endl;
+	cout << (ptr) << " = " << "(ptr)  " << " = " << *(ptr) << endl;
+}

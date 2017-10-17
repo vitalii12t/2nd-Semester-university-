@@ -1,0 +1,26 @@
+#include <iostream>
+using namespace std;
+
+float div(float a, float b) {
+	if(b == 0.0)
+		throw 2;
+	return a/b;
+}
+
+int main(void) {
+
+	float a, b;
+	cout << "input a = ";
+	cin >> a;
+	try {
+		cout << endl << "input b = ";
+		cin >> b;
+		cout << endl;
+		cout << "result: " << div(a, b) << endl;
+	}
+	catch (int i) {
+		cout << "Are you kidding me?"  << endl;
+		cout << "result: " << a << " / " << i << " = " << a / i << endl;
+		}
+	return 0;
+}

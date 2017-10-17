@@ -1,0 +1,62 @@
+#include <iostream>
+using namespace std;
+
+int main () {
+	int M;
+	do {
+	cout << endl<<"Menu:" <<endl;
+	cout << "0 - exit:" <<endl;
+	cout << "1 - addition:" <<endl;
+	cout << "2 - subtraction" <<endl;
+	cout << "3 - multiplication" <<endl;
+	cout << "4 - division" <<endl;
+	cout << "Your choice?" <<endl;
+	cin >> M;
+	int a,b,c;
+	switch (M) {
+		case 0: {
+			cout << "bye";
+			break;
+		}
+		case 1: {
+			cout <<"Enter numbers a = ";
+			cin >> a;
+			cout <<"b = " ;
+			cin >> b;
+			c=a+b;
+			cout << "Result: "<<c<<endl;
+			break;
+		}
+		case 2: {
+			cout <<"Enter numbers a = ";
+			cin >> a;
+			cout <<"b = " ;
+			cin >>b;
+			c=a-b;
+			cout << "Result: "<<c<<endl;
+			break;
+		}
+		case 3: {
+			cout <<"Enter numbers a = ";
+			cin >> a;
+			cout <<"b = " ;
+			cin >> b;
+			c=a*b;
+			cout << "Result: " <<c<<endl;
+			break;
+		}
+		case 4: {
+			cout <<"Enter numbers a = "<< a;
+			cin >> a;
+			cout <<"b = " << b;
+			c=a/b;
+			cout << "Result: "<<c<<endl;
+			break;
+		}
+		default:
+			cout << "ERROR";
+	}
+}
+while (!(M==0));
+	return 0;
+}

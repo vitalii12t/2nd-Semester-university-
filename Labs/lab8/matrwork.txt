@@ -1,0 +1,148 @@
+#include <iostream>
+#include <stdlib.h>
+#include <iomanip>
+#include <fstream>
+#include <string.h>
+
+using namespace std;
+
+
+	//------------function for reading of matrix from file--------
+float readm (ifstream &fin, int n, float** matr)	{
+	for (int i=0;i<n;i++) {
+    	for (int j = 0 ; j < n ; ++j) {
+        	fin >> matr [i][j];
+		}
+	}
+	return 0;
+}
+
+int findsize (ifstream &fin){
+
+	int n=0; float tmp;
+	char symbol;
+	while (!fin.eof())
+	{
+		fin.get(symbol);
+		if (symbol == ' ') n++;
+		if (symbol == '\n') break;
+	}
+	return n+1;
+}
+	//------------function for outputtiong of matrix--------
+void outpupm (float** matr ,int n) {
+	for (int i = 0;  i < n; i++) {
+		for ( int j = 0; j < n; ++j){
+			cout << setw(4) <<setprecision(3) << matr[i][j] << "    ";
+		}
+		cout << endl;
+	}
+}
+
+	//------------function for sorting of columns-----------
+void sortc (int n, float** matr) {
+	float tmp;
+	for (int k=0; k<n-1; k++) {
+		for (int i=0; i<n; i++) {
+			for (int j=0; j<n-1; j++) {
+				if (matr [j][i] > matr [j+1][i]) {
+
+					tmp=matr[j][i];
+					matr[j][i]=matr[j+1][i];
+					matr[j+1][i]=tmp;
+				}
+			}
+		}
+	}
+}
+
+//----function for cyclic shift of column----
+void rotdown(float** matr, int n, int col) {
+
+	float t;
+    for (int i = col; i < col+1;i++ ){
+        t = matr[n-1][i];
+        int j;
+        for ( j = n-1; j > 0; j--){
+        	matr[j][i] = matr[j - 1][i];
+        }
+        matr[j][i] = t;
+        }
+}
+//----function for making of the second diagonal-----
+bool secondd (float** matr, int n) {
+
+	int counter;
+	bool l=true;
+	for (int i=1; i<n-1; i++) {
+		for (int j=n-2; j; j-- ) {
+			counter=0;
+			while ((matr [i][j] < matr [i-1][j+1]) ){
+				rotdown (matr, n, j);
+				counter++;
+				if (counter == n+1 ) {
+					l= false;
+					break;
+				}
+			}
+			if (counter == n ) break;
+		}
+		if (counter == n ) break;
+	}
+	return l;
+}
+
+// -------------THE MAIN PROGRAM-------------
+int main()
+{
+	//--------------------WORK WITH FILES-------------------
+	//void BindInput( ifstream & inputChannel );
+	ifstream fin("input.txt");
+	if (!fin.is_open())
+	cout << "This file was found" << endl;
+
+	ofstream fout ("output.txt");
+	if (!fout)
+	cout << "Impossible to open output file" << endl;
+
+
+	int n = findsize(fin);
+
+	//again go to the beginning of the file
+	fin.seekg(0, ios::beg);
+	fin.clear();
+	//---------------initialisation of matrix--------------
+
+	float ** matr= new float *[n];
+	for (int i = 0 ; i < n ; ++i ) // initialisation of columns of array
+		matr[i] = new float [n];
+
+	//--------------reading of matrix from file-------------
+
+	readm (fin,n, matr );
+
+	cout << "Matrix from file: " << endl;
+	outpupm ( matr, n);
+
+	sortc ( n, matr);
+	cout << "Sorted matrix :" << endl;
+	outpupm ( matr, n);
+
+	char r;
+	bool k = secondd (matr, n);
+	if (k) {
+		cout<< "Congratulations!!! The second diagonal of your matrix was made."<<endl<<" Press y if you want to see it: ";
+		cin >> r;
+		if (r=='y' or r=='Y') outpupm ( matr, n);
+	}
+	else {
+		cout << "It`s not possible to create the second diagonal" << endl;
+	}
+
+	// deleting of array
+	for (int i = 0; i < n; i++)
+        delete [] matr[i];
+
+	system ("pause");
+	return 0;
+}

@@ -1,0 +1,89 @@
+#include <iostream>
+#include <stdlib.h>
+#include <iomanip>
+
+using namespace std;
+
+int main()
+{
+	int n=10;
+	cout <<"Enter size of matrix: " ;
+	cin >> n;
+	float ** matr= new float *[n];
+	for (int i = 0 ; i < n ; ++i ) // initialisation of columns of array
+		matr[i] = new float [n];
+
+	cout << "Input your matrix:"<< endl;
+    for (int i=0;i<n;i++) {
+    	for (int j = 0 ; j < n ; ++j) {
+        	cout << "matr[" << i<< "," << j << "] = ";
+        	cin >> matr [i][j];
+		}
+	}
+
+	//sorting of matrix
+	float tmp;
+	for(int m = 0; m < n; m++)
+	{
+		for(int l = 0; l < n; l++)
+		{
+			for(int i = 0; i < n; i++)
+			{
+				for(int j = 0; j < n; j++)
+				{
+					if(matr[m][l]<matr[i][j])
+					{
+						tmp=matr[m][l];
+						matr[m][l]=matr[i][j];
+						matr[i][j]=tmp;
+					}
+				}
+			}
+		}
+	}
+cout << "matrix was sorted " << endl;
+	//outputting of matrix
+	for (int i = 0; i < n; ++i) {
+		for ( int j = 0; j < n; ++j){
+			cout << setw(4) <<setprecision(3) << matr[i][j] << "    ";
+		}
+		cout << endl;
+	}
+	//n=n-1;
+	//making of principal diagonal
+	for (int i = (n-1); (i>0) ; --i){
+		cout << "i="<< i << endl;
+		for (int j = (n-1); (j>0) ; --j) {
+			for (int k = 0; k < n; k++) {
+
+				tmp = matr[i][j];
+				matr [i][j] = matr [k][k];
+				matr [k][k] = tmp;
+			}
+		}
+	}
+
+	//cout << ""
+	//outputting of matrix
+	for (int i = 0; i < n; ++i) {
+		for ( int j = 0; j < n; ++j){
+			cout << setw(4) <<setprecision(3) << matr[i][j] << "    ";
+		}
+		cout << endl;
+	}
+
+	// deleting of array
+	for (int i = 0; i < n; i++)
+        delete [] matr[i];
+
+	system ("pause");
+	return 0;
+}
+//outputting of matrix
+/*for (int i = 0; i < n; ++i) {
+    for ( int j = 0; j < n; ++j){
+        cout << setw(4) <<setprecision(3) << matr[i][j] << "    ";
+    }
+    cout << endl;
+}
+*/

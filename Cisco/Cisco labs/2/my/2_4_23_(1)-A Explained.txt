@@ -1,0 +1,26 @@
+#include <iostream>
+#include <bitset>
+using namespace std;
+int main()
+{
+	int a ;
+	cout << "Enter your number: ";
+	cin >> a;
+	int ones = 0;
+	bitset<10> da(1);
+	for (int bit = a; bit > 0; bit >>= 1) {
+		bitset<10> num1(bit);
+		cout<<num1<<endl<<"&"<<endl<<da<<endl<<"--------"<<endl;
+
+
+		bitset<10> res(bit&1);
+		cout<<res<<endl;
+
+
+		if(bit&1 == 1)
+			ones++;
+cout<<"ones="<<ones<<endl<<endl<<endl;
+			}
+	cout << "ONES="<<ones<<endl;
+	cout<<"kinec";
+}

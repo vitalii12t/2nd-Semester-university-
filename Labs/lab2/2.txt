@@ -1,0 +1,29 @@
+#include <iostream>
+#include <conio.h>
+#include <math.h>
+using namespace std;
+
+int main ()
+{
+	float m,n,a,b,c;
+	cout << "Vvedit znachennya m=";
+	cin >> m;
+	cout << "Vvedit znachennya n=";
+	cin >> n;
+	clrscr();
+	a=n++-m;
+	cout << "m=" << m  << " ";
+	cout << "n=" << n  <<endl;
+	cout << "n++-m= " << a << endl;
+	b=m-->n;
+	cout << "m=" << m <<" ";
+	cout << "n=" << n <<endl;
+	cout << "m-->n= " << b << endl;
+	c=n-->m;
+	cout << "m=" << m <<" ";
+	cout << "n=" << n <<endl;
+	cout << "n-->m= " << c << endl;
+
+	getch ();
+return 0;
+}

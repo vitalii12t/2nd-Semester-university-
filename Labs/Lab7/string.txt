@@ -1,0 +1,59 @@
+#include <iostream>
+#include <string.h>
+#include <ctype.h>
+#include <fstream>
+
+using namespace std;
+
+int main () {
+
+	//---------------------------FILES---------------------------
+
+    ifstream fin ("input.txt", ios::in );
+	if (!fin.is_open())
+	cout << "This file was found" << endl;
+
+	ofstream fout ("output.txt");
+	if (!fout)
+	cout << "Impossible to open output file" << endl;
+
+	char text[80];
+	fin.getline(text, 80);
+	int k=0;
+	k=strlen(text);
+
+	cout.write(text, k) << endl;
+
+	//---------------------------task 1---------------------------
+
+	char symbol;
+	cout << "\nEnter the symbol which you want to count in your text: ";
+	cin >> symbol;
+
+	int n=0;
+	for (int i=0; i<k;++i){
+		if (text[i]==symbol)
+			n++;
+	}
+	cout << "\nThe symbol \""<< symbol<< "\" is repeated " << n << " times" << endl;
+
+	//---------------------------task 2 and 3---------------------------
+
+	char word [80];
+	cout << "\nEnter the word for comparation: ";
+	cin.getline(word,80);
+	cin.getline(word,80);
+
+	char * pch = strtok (text," ,.-!?");
+	cout << endl;
+	while (pch != NULL)  {
+
+	if ((strlen(pch)>(strlen(word)))) {
+
+    	cout << pch  << "\n";
+    	fout << pch << endl;
+	}
+	  pch = strtok (NULL, " ,.-");
+  }
+
+}

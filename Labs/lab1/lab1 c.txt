@@ -1,0 +1,22 @@
+#include <iostream.h>
+#include <conio.h>
+#include <iomanip.h> //дозволяє використання маніпуляторів
+using namespace std;
+
+int main ()
+{
+	float a,b,c;
+	cout <<"Vvedit a=";
+	cin >> a;
+	cout <<"Vvedit b=";
+	cin >> b;
+	cout << "Vvedit c=";
+	cin >> c;
+	clrscr ();
+	cout << setw (5)<< setprecision (1) << "a=" << a <<endl;
+	cout << setw (5)<< setprecision (4) << "b=" << b <<endl;
+	cout << setw (5)<< setprecision (4) << "c=" << c <<endl;
+
+	getch();
+	return 0;
+}

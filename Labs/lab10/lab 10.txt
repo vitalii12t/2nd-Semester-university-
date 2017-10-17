@@ -1,0 +1,81 @@
+#include <iostream>
+#include <iomanip>
+#include <conio.h>
+#include <string.h>
+#include <ctype.h>
+
+using namespace std;
+
+struct computer {
+	public:
+	string processor;
+	float frequency;
+	int hdd;
+	unsigned int price;
+
+};
+
+int main () {
+
+	int n;
+	cout << "Enter the quantity of computers: ";
+	cin >> n;
+	computer* arr = new computer [n];
+
+	for (int i=0; i < n; i++) {
+		cout << "\n\nEnter the data of the "<< i+1<< " computer";
+		cout << "\nEnter the  name : ";
+		cin >> arr[i].processor;
+		cout << "Enter the processor`s frequency (in GHz): ";
+		cin >> arr[i].frequency;
+		cout << "Enter the HDD`s capacity (in GB): ";
+		cin >> arr[i].hdd;
+		cout << "Enter the  price of computer (in $): ";
+		cin >> arr[i].price;
+	}
+
+	//sorting of array after processor`s frequency
+
+	float temp;
+	for (int i=0; i < n; i++) {
+		for (int j=0; j < n; j++) {
+			if (arr[j].frequency > arr[j+1].frequency) {
+				temp = arr[j].frequency;
+				arr[j].frequency = arr[j+1].frequency;
+				arr[j+1].frequency = temp;
+			}
+		}
+	}
+
+	float freq; unsigned int  pr;
+	cout << endl << "Dear Student, input the frequency of your future computer: " ;
+	cin >> freq;
+	cout << endl << "\nEnter the maximal price: ";
+	cin >> pr;
+
+	bool l=false;
+
+	for (int i=0; i < n; i++) {
+		if ( (arr[i].frequency <=freq) && (arr[i].price <= pr) ) {
+			l=true;
+			//cout << "\n\nWe can recommend you the next computers: ";
+			cout << "\n\The name of the  processor: " << arr[i].processor;
+			cout << "\nThe frequency of the  processor is: " << arr[i].frequency << " GHz";
+			cout << "\nThe capacity of HHD of the  computer is: "<<arr[i].hdd << " GB";
+			cout << "\nThe price of the  computer is: " <<arr[i].price<< " $";
+		}
+	}
+	if (l==0) cout << "\nSorry, we haven`t a convinable proposition for you"<< endl;
+
+	/*
+	for (int i=0; i < n; i++) {
+		cout << "\n\nThe name of the "<<i+1<<" processor: " << arr[i].processor;
+		cout << "\nThe frequency of the "<<i+1<< " processor is: " << " MHz"<<arr[i].frequency;
+		cout << "\nThe capacity of HHD of the " << i+1 << " computer is: " << " GB"<<arr[i].hdd;
+		cout << "\nThe price of the "<< i+1<< " computer is: " <<arr[i].price<< " $";
+	}
+	*/
+
+	delete [] arr;
+	return 0;
+}

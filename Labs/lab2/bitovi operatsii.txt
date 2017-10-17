@@ -1,0 +1,43 @@
+#include <iostream>
+#include <conio.h>
+#include <math.h>
+#include <bitset>
+using namespace std;
+
+int main ()
+{
+  	char a,b;
+    cout << "Vvedit znachennya a=" << endl;
+    cin >> a;
+    cout << "Vvedit znachennya b="<< endl;
+    cin >> b;
+    bitset <8> A=a, B=b; // Opisuemo pobitovi znachenny zminnih a i b
+    cout << "Dviykove i desyatkove predstavlennya chysel:\n";
+    cout << setw(2) << number.to_ulong() << "A = " << A << endl;
+    cout << "a="<< a << endl;
+    cout << setw(2) << number.to_ulong() << "B = " << B << endl;
+    cout << "b="<< b << endl;
+    int zsuv; // Zmynna dlya vyznachennya kilikosti znachenny dlya zsuvu
+    do {
+    cout << "Vvedit znachennya dlya pobitovogo zsuvu (menishe 8 i bilishe 0)";
+    cin >> zsuv;
+    if (zsuv<=0) and (zsuv>8)
+      cout << "\nChomu moya programma popala v ruki GUMANITARIU ?!"<< endl;
+    }
+    while (zsuv>=0) and (zsuv<8);
+    char aa,bb; // zminni dlya pobitovo zaminenyh a ta b
+    aa= a << zsuv ;
+    bb= b >> zsuv ;
+    cout << "\nZnachennya pobitovo zminnyh a ta b" << endl;
+    cout << "Pobitove a="<< aa<< endl;
+    cout << "Zvychyaine a="<< a<< endl;
+    cout << "Pobitove b="<< bb<< endl;
+    cout << "Zvychyaine b="<< b<< endl;
+
+    int c; // nova zminna c
+    bitset <8> C=c;
+
+
+    getch ();
+return 0;
+}

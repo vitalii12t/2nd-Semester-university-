@@ -1,0 +1,44 @@
+#include <iostream>
+#include <iomanip>
+
+using namespace std;
+
+int main () {
+
+	int i;
+	char c;
+	float f;
+	double d;
+
+	cout << "introduce a int variable: ";
+	cin >> i ;
+	cout << "\nintroduce a char variable: " ;
+	cin >> c ;
+	cout << "\nintroduce a float variable: ";
+	cin >> f ;
+	cout << "\nintroduce a double variable: " ;
+	cin >> d ;
+	getchar ();
+
+	int *ii = &i;
+	char *cc = NULL;
+	float *ff= NULL;
+	double *dd;
+
+	cc = &c;
+	ff = &f;
+	dd = &d;
+	double *p = new double (10.6);
+	cout << "i = " << *ii << " = " << ii<< endl;
+	cout << "c = " << *cc << " = " << cc<< endl;
+	cout << "f = " << *ff << " = " << ff<< endl;
+	cout << "d = " << *dd << " = " << dd<< endl;
+
+	*cc += 4;
+	cout << "cc = " << cc << "\t        c = " << c;
+	*dd += 1;
+	cout << "\ndd = "<< dd << "\td= " << d<<endl;
+
+	getchar ();
+	return 0;
+}

@@ -1,0 +1,213 @@
+#include <iostream>
+#include <string.h>
+#include <ctype.h>
+
+using namespace std;
+
+class StringValidator
+{
+public:
+	virtual ~StringValidator() {}; // â³ðòóàëüíèé êîíñòðóêòîð
+	virtual bool isValid(string input) = 0; // ÷èñòà â³ðòóàëüíà ôóíêö³ÿ äëÿ ïåðåâ³ðêè ïàðîëþ
+};
+
+
+/*********************************************************************/
+class DummyValidator : public StringValidator {
+public:
+
+	bool isValid(std::string input);
+};
+
+bool DummyValidator::isValid(std::string input) // ïðèéìàòèìå áóäü-ÿêèé ïàðîëü
+{
+	return true;
+}
+
+/*********************************************************************/
+class ExactValidator : public StringValidator {
+public:
+	ExactValidator(string pattern);
+	bool isValid(std::string input);
+
+private:
+	string pattern;
+};
+
+
+ExactValidator:: ExactValidator(string pattern){
+	this -> pattern = pattern;
+}
+
+bool ExactValidator::isValid(std::string input)
+{
+	if ( this -> pattern == input ) return true;
+	else return false;
+}
+
+/*********************************************************************/
+void printValid(StringValidator &validator, string input)
+{
+	cout << "The string '" << input << "' is "<< (validator.isValid(input) ? "valid" : "invalid") << endl;
+}
+
+
+/*********************************************************************/
+
+class MinLengthValidator : public StringValidator {
+public:
+	bool isValid ( string input );
+	MinLengthValidator(string pattern);
+
+private:
+	string pattern;
+};
+
+bool MinLengthValidator::isValid ( string input ) {
+	bool l ;
+	if ( input.length () < 3) l = false;
+	else l = true;
+
+	if ( ( l ) && ( this -> pattern == input ) ) return true;
+	else return false;
+}
+
+MinLengthValidator::MinLengthValidator(string pattern){
+	this -> pattern = pattern;
+
+	if ( pattern.length () < 3) cout << endl << "Pass '" << pattern << "' is too short! It isn`t valid " << endl;
+}
+
+/*********************************************************************/
+class MaxLengthValidator : public StringValidator {
+public:
+	bool isValid ( string input );
+	MaxLengthValidator(string pattern);
+
+private:
+	string pattern;
+};
+
+bool MaxLengthValidator::isValid ( string input ) {
+	bool l;
+
+	if ( input.length () > 10) l = false;
+	else l = true;
+
+	if ( ( l ) && ( this -> pattern == input ) ) return true;
+	else return false;
+}
+
+MaxLengthValidator::MaxLengthValidator ( string pattern ){
+	this -> pattern = pattern;
+	if ( pattern.length () > 10) cout << endl << "Pass '" << pattern << "' is too long! It isn`t valid " << endl;
+}
+/*********************************************************************/
+
+class LowCaseValidator : public StringValidator {
+public:
+	bool isValid ( string input );
+	LowCaseValidator ( string pattern );
+	bool LowCaseControl ( string input );
+
+private:
+	string pattern;
+};
+
+LowCaseValidator::LowCaseValidator ( string pattern ) {
+	this -> pattern = pattern;
+	if ( !LowCaseControl ( pattern ) ) cout << endl << "Pass '" << pattern << "' doesn`t contain lowercase letters ! It isn`t valid !!!" << endl;
+}
+
+bool LowCaseValidator::isValid ( string input ) {
+
+	if ( ( LowCaseControl( input ) ) && ( this -> pattern == input ) ) return true;
+	else return false;
+}
+
+bool LowCaseValidator::LowCaseControl ( string input ) {
+	for ( int i = 0; i < input.length(); i++ ) {
+		if ( islower ( input [i] ) ) {
+			return true;
+			break;
+		}
+		else return false;
+	}
+}
+/*********************************************************************/
+
+class UpCaseValidator : public StringValidator {
+public:
+	bool isValid ( string input );
+	UpCaseValidator ( string pattern );
+	bool UpCaseControl ( string input );
+
+private:
+	string pattern;
+};
+
+bool UpCaseValidator::isValid ( string input ){
+	if ( ( UpCaseControl( input ) ) && ( this -> pattern == input ) ) return true;
+	else return false;
+}
+
+UpCaseValidator::UpCaseValidator ( string pattern ) {
+	this -> pattern = pattern;
+	if ( !UpCaseControl ( pattern ) ) cout << endl << "Pass '" << pattern << "' doesn`t contain uppercase letters ! It isn`t valid !!!" << endl;
+}
+
+bool UpCaseValidator::UpCaseControl ( string input ) {
+	for ( int i = 0; i < input.length(); i++ ) {
+		if ( isupper ( input [i] ) ) {
+			return true;
+			break;
+		}
+		else return false;
+	}
+}
+
+/*********************************************************************/
+
+class SymbolValidator : public StringValidator {
+public:
+	bool isValid ( string input );
+	SymbolValidator ( string pattern );
+	bool SymbolControl ( string input );
+
+private:
+	string pattern;
+};
+
+bool SymbolValidator::isValid ( string input ) {
+	if ( ( SymbolControl( input ) ) && ( this -> pattern == input ) ) return true;
+	else return false;
+}
+
+SymbolValidator::SymbolValidator ( string pattern ) {
+	this -> pattern = pattern;
+	if ( !SymbolControl ( pattern ) ) cout << endl << "Pass '" << pattern << "' doesn`t contain symbols ! It isn`t valid !!!" << endl;
+}
+
+bool SymbolValidator::SymbolControl ( string input ) {
+	for ( int i = 0; i < input.length(); i++ ) {
+		if ( ispunct ( input [i] ) ) {
+			return true;
+			break;
+		}
+		else return false;
+	}
+}
+
+/*********************************************************************/
+
+int main()
+{
+	//DummyValidator dummy;
+	//printValid(dummy, "hello");
+
+	UpCaseValidator exact("123123123111");
+	//printValid(exact, "hello");
+	printValid(exact, "123123123111");
+
+	return 0;
+}

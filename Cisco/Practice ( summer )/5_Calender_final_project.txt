@@ -1,0 +1,287 @@
+#include <iostream>
+#include <math.h>
+#include <string>
+#include <sstream>
+#include <ctype.h>
+#include <cstdlib>
+#include <ctime>
+
+
+using namespace std;
+
+	class Date {
+		protected:
+			int day, month, year;
+
+		public:
+
+		/* TODO (#2#): Default constructor */
+
+			Date (int dayk=1, int monthk=1, int yeark=1){
+				day = dayk;
+				month = monthk;
+				year = yeark;
+			}
+		/* TODO (#3#): Copy  constructor */
+			Date (const Date &Time) {
+			//  cout<< "Copy constructor" << endl;
+				day = Time.day;
+				month = Time.month;
+				year = Time.year;
+
+			}
+		/* TODO (#4#): Figure format */
+
+		string get_date_short()
+		{
+			stringstream ss;
+			ss << day << "." << month << "." << year;
+			string sss = ss.str();
+				return sss;
+			}
+		/* TODO (#5#): Expanded format */
+
+		string get_date_expanded ()
+		{
+		  stringstream ss;
+			string Days[7]={"Sunday","Monday","Tuesday","Wednesday","Thursday",
+                  "Friday","Saturday"};
+
+		  ss << day << " " << name_of_month(month) << " " << year  << " - "<< Days[this->day_of_week(Date(day,month,year))];
+
+			string sss = ss.str();
+				return sss;
+			}
+
+		void the_date_short(){
+				 cout << endl << day << '.' << month << ' ' << year << endl;
+			}
+		void the_date_expanded(){
+			string Days[7]={"Sunday","Monday","Tuesday","Wednesday","Thursday",
+                  "Friday","Saturday"};
+
+				cout << endl << day << " " << name_of_month(month)<< " " << year << " - " << Days[this->day_of_week(Date(day,month,year))];
+			}
+
+
+		Date get_date() {
+			return Date(day, month, year);
+		}
+
+		//---------------------------NEW DATE -----------------------------/
+	Date new_date() {
+
+		int day2, month2, year2;
+		Date date;
+		cout << "Please, enter any date like:\n";
+		er:
+		cout<< "\tDay="; cin>>day2;
+		cout << "\tMonth="; cin>>month2;
+		cout << "\tYear="; cin>>year2;
+		if (is_correct_date(day2, month2, year2)){
+	      return Date(day2, month2, year2);
+				} else {
+					cout<<"\nPlease, enter corect data\n"; goto er;
+				}    //break;
+					//is No
+			//	}//switch
+
+}
+	string name_of_month (int num) {
+				string out;
+				switch (month) {
+					case 1: out = "January"; break;
+					case 2: out = "February"; break;
+					case 3: out = "March"; break;
+					case 4: out = "April"; break;
+					case 5: out = "May"; break;
+					case 6: out = "June"; break;
+					case 7: out = "July"; break;
+					case 8: out = "August"; break;
+					case 9: out = "September"; break;
+					case 10: out = "October"; break;
+					case 11: out = "November"; break;
+					case 12: out = "December"; break;
+					default: out = "Month";
+				}
+				return out;
+			}
+
+	/* TODO (#6#): Is the date correct */
+	bool is_correct_date(int d, int mnth, int yr){
+		bool in = true;
+		 if (mnth<0 || mnth>12) {
+				cout << "\nIncorrect number of month\n";
+			in = false;
+			return in;
+			}
+		 if (d>monthLength(yr, mnth) && d<=31){
+		 	in = false;
+					cout << "\nIncorrect number of day in this month\n";
+				}	else if (d<0 || d>31) {
+			in = false;
+				 cout<< "\nIncorrect number of day\n";
+				 return in;
+			}
+
+			if(yr<=1970) {
+				in=false;
+				cout << "\nIncorrect year. It should be >= 1970\n";
+			}
+		if (in)	{
+				return in;
+				cout << "\nAll is fine.\n";
+			}
+
+		}
+
+	bool isLeap(int year) {
+   if (((year % 4 != 0)&&(year % 100 != 0)) || (year % 400 == 0))
+	 return false;
+	else
+		return true;
+}
+
+
+	int monthLength(int year, int month) {
+	int Days;
+
+	if (month == 4 || month == 6 || month == 9 || month == 11)
+		Days = 30;
+		else if (month == 02)
+		{
+		if (isLeap(year))
+				Days = 29;
+			else
+				Days = 28;
+		}
+			else
+			Days = 31;
+
+	return Days;
+}
+
+	int dayOfYear(int day, int month, int year) {
+	 int sum = 0;
+	 for (int i=1; i<month; i++)
+	 {
+	 	sum+=monthLength(year, i);
+	 }
+	 return sum+day;
+	}
+	int get_day(){
+		return day;
+	}
+	void change_day(int d){
+		day = d;
+	}
+	int get_month(){
+		return month;
+	}
+	void change_month(int m){
+		month = m;
+	}
+	int get_year() {
+		return year;
+	}
+	void change_year(int y){
+		year = y;
+	}
+
+int operator -(Date d2){
+	Date d1 = Date(this->day, this->month, this->year);
+	if (d1>d2) {
+		Date buf = d1;
+		d1=d2; d2=buf;
+	}
+	 int days_btw_years = 0;
+	 for (int years=d1.year; years<d2.year; years++){
+	 	if (isLeap(years))
+				days_btw_years+=366;
+			else
+				days_btw_years+=365;
+		}
+		return abs(days_btw_years + dayOfYear(d2.day, d2.month, d2.year) - dayOfYear(d1.day, d1.month, d1.year));
+		}
+
+Date operator =(Date d2) {
+	this->day = d2.day;
+	this->month = d2.month;
+	this->year = d2.year;
+}
+bool operator ==(Date d2){
+	if(this->day==d2.day && this->month==d2.month && this->year==d2.year) return true;
+	else return false;
+}
+
+bool operator >(Date d2){
+
+	if (this->year>d2.year) {
+		return true;
+	  }else if (this->year<d2.year) {
+			return false;
+			} else if (this->year==d2.year) {
+					if (this->month>d2.month) {
+						return true;
+						} else if(this->month<d2.month) {
+								return false;
+							}else if (this->month==d2.month) {
+								if (this->day>d2.day) {
+									return true;
+								}else if (this->day<d2.day){
+									return false;
+											} else if(this->day==d2.day) return false;
+							}
+			}
+
+}
+
+
+	int day_of_week (Date ND){
+		tm timeStruct = {};
+		timeStruct.tm_year = ND.get_year() - 1900;
+		timeStruct.tm_mon = ND.get_month() - 1;
+		timeStruct.tm_mday = ND.get_day();
+		timeStruct.tm_hour = 12;    //  To avoid any doubts about summer time, etc.
+		mktime( &timeStruct );
+		return timeStruct.tm_wday;
+	}
+
+~Date() {
+		//cout << "Destuckted!\n";
+	}
+	};
+
+
+
+void pause_func(){
+	cout << endl;
+		system("PAUSE");
+	cout << endl;
+}
+
+
+int main () {
+
+	//	time_t t = time(0);   // get time now
+	//	struct tm * now = localtime( & t );
+	//		Date CurrentDate = Date (now->tm_mday,now->tm_mon + 1,now->tm_year + 1900);
+    system ( "color F0");
+	bool z;
+
+	do {
+		Date NeedDate = Date (1,1,1970);
+		Date DD = DD.new_date();
+		cout << DD.get_date_expanded() << " - " << NeedDate - DD << " days since 1st January 1970\n";
+		pause_func();
+		cout << "Do you want to input more one date? ( 1 - YES; 0 - NO): " ;
+		cin >> z;
+		if ( z ) system ("cls");
+
+	}
+	while (z);
+    if ( !z ) cout << endl << endl << "\tBYE! HAVE A NICE DAY!" << endl;
+
+	return 0;
+
+}

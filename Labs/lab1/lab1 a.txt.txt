@@ -1,0 +1,23 @@
+#include <iostream.h> // визначає стандартні потоки коли вводить і виводить інформацію
+#include <conio.h>  //для функції очистки clrscr
+#include <stdio.h>  //для виводу на екран кольорового тесту
+
+int main ()
+{
+clrscr ();
+textbackground (WHITE);
+textcolor (YELLOW);
+
+ cprintf ( "Shtepu Volodimir \n\r" );
+
+ textcolor (LIGHTRED);
+ cprintf ( "Repchuk Yurii \n\r");
+
+ textcolor (BLUE);
+ cprintf ( "Shuh Irina \n\r");
+
+ textcolor (RED);
+ cprintf ( "Rybak Mykhilo \n\r");
+
+getch ();
+}

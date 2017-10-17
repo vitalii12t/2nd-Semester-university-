@@ -1,0 +1,37 @@
+#include <iostream>
+using namespace std;
+
+int main() {
+    struct TIME {
+        int hh ;
+        int mm ;
+    };
+    TIME time;
+	int c;
+
+    	do
+			{
+			cout << "Enter hour: ";
+			cin >> time.hh;
+		}
+		while ((time.hh>23)or (time.hh<0));
+		do
+			{
+			cout << "Enter min: ";
+			cin >> time.mm;
+		}
+		while ((time.mm>59)or (time.mm<0));
+		cout<< "Enter event`s duration: ";
+		cin >> c;
+	time.mm=time.mm+c;
+	do
+		{
+			time.mm-=60;
+			time.hh+=1;
+		}
+	while (!(time.mm<60));
+	if (time.hh>23)
+		time.hh=time.hh%24;
+	cout << "\nYOUR TIME: " << time.hh << ":"<< time.mm;
+
+}

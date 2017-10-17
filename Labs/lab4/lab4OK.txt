@@ -1,0 +1,67 @@
+#include <iostream>
+#include <math.h>
+#include <iomanip>
+#include <conio.h>
+using namespace std;
+
+int main ()
+{
+    float f,a,b,c,xi, xf, dx,x;
+    a=10;b=20;c=13;xi=5;xf=6;dx=0.1;
+    /*cout << "Enter a = ";
+    cin >> a;
+    cout << "\nEnter b = ";
+    cin >> b;
+    cout << "\nEnter c = ";
+    cin >> c;
+    cout << "\nEnter x initial xi = ";
+    cin >> xi;
+    cout << "\nEnter x final xf=";
+    cin >> xf;
+    cout << "\nEnter step dx = ";
+    cin >> dx;
+    system("cls"); */
+    cout << " ___________________________ "<<endl;
+    cout << "       Table of values       "<<endl;
+    cout << "|____________________________|"<<endl;
+    cout << "|      X       |       F     |" <<endl;
+    cout <<" ____________________________ "<<endl;
+	bool l;
+	l= (!((int)a&(int)b&(int)c));
+    if ((x<0) && (b!=0))
+        {for (x=xi;x<=xf;x=x+dx)
+            {
+            f=a*(pow(x,3))+b*b*x;
+			if (l=1)
+				{
+            		cout << setiosflags (ios::showpoint | ios::fixed);
+            		cout << setw (5) <<setprecision(3)<< "|    "<<x<< "     |    "<<setw (5)<<setprecision(3) <<f<<"    |"<<endl;
+            		cout <<" ____________________________ "<<endl;
+           		}
+			}
+        }
+    else if ((x>0) && (b=0))
+		{for (x=xi;x<=xf;x=x+dx)
+		if (l=1)
+			{f=(x-a)/(x-c);
+            	{
+            		cout << setiosflags (ios::showpoint | ios::fixed);
+            		cout << setw (5) <<setprecision(3)<< "|    "<<x<< "     |    "<<setw (5)<<setprecision(3) <<f<<"    |"<<endl;
+            		cout <<" ____________________________ "<<endl;
+            	}
+			}
+        }
+    else
+        {for (x=xi;x<=xf;x+=dx)
+            {f=(x+5)/c*x;
+			if (l=1)
+				{
+            		cout << setiosflags (ios::showpoint | ios::fixed);
+            		cout << setw (5) <<setprecision(3)<< "|    "<<x<< "     |    "<<setw (5) <<setprecision(3) <<f<<"    |"<<endl;
+            		cout <<" ____________________________ "<<endl;
+            	}
+			}
+		}
+	getch();
+    return 0;
+}

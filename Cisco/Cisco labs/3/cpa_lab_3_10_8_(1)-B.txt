@@ -1,0 +1,35 @@
+#include <iostream>
+#include <cstdlib>
+#include <ctime>
+#include <iomanip>
+
+using namespace std;
+
+int main(void) {
+
+	int maxball;
+	int ballsno;
+	cout << "Max ball number? ";
+	cin >> maxball;
+	cout << "How many balls? ";
+	cin >> ballsno;
+	srand(time(NULL));
+	int  *arr = new int [maxball];
+
+	for (int i=0; i<maxball; i++) {
+
+		arr [i]= rand() %100 +i;
+	//	cout << setw (10) <<"a["<< i <<"]="<<arr[i] ;
+	}
+
+	cout <<endl<< "   WINNERS:   " << endl;
+	int *win = new int [ballsno];// Create practical useless array
+	for (int i=0; i<ballsno; i++){
+
+		win [i] = arr [(rand () %maxball)];
+		cout << win [i] <<endl;
+	}
+	return 0;
+	delete arr;
+	delete win;
+}

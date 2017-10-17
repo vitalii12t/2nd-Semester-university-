@@ -1,0 +1,357 @@
+#include <iostream>
+#include <iomanip>
+#include <conio.h>
+#include <stdio.h>
+#include <string.h>
+#include <ctype.h>
+
+using namespace std;
+
+class passport {
+	protected:
+	string series; // field of series
+	int number;	   // field of number
+	string issued; // field of issued data
+
+public:
+//----------the dafault constructor----------
+
+passport (string series1 = "default", string issued1 = "default", int number1 = 0) {
+		 	series = series1;
+			number = number1;
+			issued = issued1;
+		}
+//---------the copy constructor---------
+passport (passport &p) {
+	series = p.series;
+	number = p.number;
+	issued = p.issued;
+}
+
+
+
+//----------- FUNCTIONS FOR OUTPUTING OF DATA-----------
+	void get_pass (passport P) {
+		cout << "The passport`s series: " << P.series << endl;
+		cout << "The passport`s number: " << P.number << endl;
+		cout << "The passport was issued: " << P.issued << endl;
+	}
+
+	string get_series () {
+		return series;
+	}
+
+	void set_series (string s ) {
+		series = s;
+	}
+
+	int get_number() {
+		return number;
+	}
+
+	void set_number (int s) {
+		number = s;
+	}
+
+	string get_issued () {
+		return issued;
+	}
+
+	void set_issued (string s) {
+		issued = s;
+	}
+};
+
+// ==============THE NEW CLASS===========
+
+class passport_office : public passport {
+
+	string fName, lName, adress; // fields for First Name, Last Name and adress
+	int dd, mm, yy; 	// fields for date of birth
+
+public:
+//----------the dafault constructor----------
+	passport_office (string fName1 = "default fName", string lName1 = "default", int dd1 = 0, int mm1 = 0, int yy1 = 0, string series1 = "default series", string issued1 = "default issued", string number1 = "default number", string adress1 = "default adress") {
+
+			fName = fName1;
+			lName = lName1;
+			dd=dd1;
+			mm = mm1;
+			yy = yy1;
+			series = series1;
+			number = number;
+			issued = issued1;
+			adress = adress1;
+	}
+
+//-------constructor for copying of data-------
+	passport_office (passport_office &p) {
+		fName = p.fName;
+		lName = p.lName;
+		dd = p.dd;
+		mm = p.mm;
+		yy = p.yy;
+		adress = p.adress;
+		series = p.series;
+		issued = p.issued;
+		number = p.number;
+	}
+
+//-------method for changing of last name-------
+
+	change_lName () {
+		cout << "Enter the new last name: ";
+		cin >> lName;
+	}
+
+//--------function for setting of data-------
+	void set_profile () {
+		cout << "Input the first name: " ;
+		cin >> fName;
+		cout << "Input the last name: " ;
+		cin >> lName;
+		cout << "Input the date of birth (only numeric characters): ";
+		cout << endl << "Day: ";
+		cin >> dd;
+		cout << "Month: ";
+		cin >> mm;
+		cout << "Year: ";
+		cin >> yy;
+		cout << "Input passport`s series: ";
+		cin >> series;
+		cout << "Input passport`s number: ";
+		cin >> number;
+		cout << "Input when passport was issued: ";
+		cin >> issued;
+		cout << "Input your adress: " ;
+		cin >> adress;
+		}
+
+//-------methods for getting and setting of data------
+	void get_profile () {
+		cout << "The first name: " << fName << endl;
+		cout << "The last name: " << lName << endl;
+		cout << "Date of birdth: " << dd << "/" << mm << "/" << yy << endl;
+		cout << "The passport`s series: " << series << endl;
+		cout << "The passport`s number: " << number << endl;
+		cout << "The passport was issued: " << issued << endl;
+		cout << "Adress: " << adress <<endl << endl;
+	}
+
+	void set_fName (string s) {
+		fName = s;
+	}
+	string get_fName () {
+		return lName;
+	}
+
+	string get_lName () {
+		return lName;
+	}
+	void set_lName (string s) {
+		lName = s;
+	}
+
+	string get_issued () {
+			return issued;
+		}
+	void set_issued (string s) {
+		issued = s;
+	}
+
+	string get_adress() {
+		return adress;
+	}
+	string set_adress (string s) {
+		adress = s;
+	}
+
+	void get_dob (int &dd1, int &mm1, int &yy1) {
+		dd1 = dd;
+		mm1 = mm;
+		yy1 = yy;
+	}
+
+	void set_dob (int &dd1, int &mm1, int &yy1) {
+		dd = dd1;
+		mm = mm1;
+		yy = yy1;
+	}
+
+	bool same_address(string ad){
+		if (this->lName==ad) return true;
+			else return false;
+	}
+//=============================================
+};
+
+int menu() {
+
+	int v;
+	cout << "\tMENU"<< endl;
+	cout << "1.Input a new data" << endl;
+	cout << "2. Get data" << endl;
+	cout << "3. Search someone after last name" << endl;
+	cout << "4. Change the last name" << endl;
+	cout << "5. Find people with the same adress" << endl;
+	cout << "6. Sorting of data after last name" << endl;
+	cout << "0. Exit" << endl;
+	cout << ">>> ";
+	cin >> v;
+	return v;
+}
+
+int main () {
+
+	bool l;
+	int n = 10; // the quantity of citiziens
+	passport_office P[10];
+	P[0] = passport_office("Andriy", "Andruschak", 2, 12, 1987, "CE 874529", "14/03/1999 by local authorities","1234567890", "Ivano-Frankivsk");
+	P[1] = passport_office("Ivan", "Yarema", 1, 6, 1995, "KP 425671","28/09/2011 by local authorities","1234567890", "Chernivtsy");
+	P[2] = passport_office("Oleksandr", "Oliynik", 17, 8, 2001, "TT 758403","14/9/2017 by local authorities","1234567890", "Kiyv");
+	P[3] = passport_office("Taras", "Demchuk", 19, 10, 1999, "KP 391802","21/12/2015 by local authorities","1234567890", "Chernivtsy");
+	P[4] = passport_office("Volodimir", "Shevchenko", 29, 2, 1989, "KA 482036 ","12/3/2005 by local authorities","1234567890", "Lvov");
+	P[5] = passport_office("Roman", "Franko", 12, 5, 1997, "TT 305902","18/6/2013 by local authorities","1234567890", "Kiyv");
+	P[6] = passport_office("Andriy", "Komarov", 26, 7, 1994, "KP 805832","28/2/2009 by local authorities","1234567890", "Chernivtsy");
+	P[7] = passport_office("Yuriy", "Stus", 16, 6, 2001, "KK 940201","20/12/2016","1234567890", "Odessa");
+	P[8] = passport_office ("Valeriy", "Romanov", 9, 7, 1984, "HK 239020", "4/9/1990 by local authorities","1234567890", "Chernigyv");
+	P[9] = passport_office("Gheorghiy", "Goloborodko", 19, 9, 1994, "KH 780812","19/10/2010 by local authorities","1234567890", "Poltava");
+
+/*
+cout << "Input the quantity of passports: ";
+	int n;
+	cin >> n;
+	cout << endl;
+	passport_office* P = new passport_office [n];
+
+	cout << "\tInput the data of every passport: " << endl;
+	for (int i = 0; i < n; i++) {
+		cout << "The "<< i+1 << " passport:" << endl;
+		P[i].set_profile();
+		cout << endl << endl;
+	}
+*/
+
+	int v=1;
+while (v) {
+	v = menu ();
+	switch (v) {
+		case 1: {
+			system("cls");
+			cout << "\tInput the data of every passport: " << endl;
+			for (int i = 0; i < n; i++) {
+				cout << "The "<< i+1 << " passport:" << endl;
+				P[i].set_profile();
+				cout << endl << endl;
+			}
+			cout << endl  ;
+			system ("pause");
+			system("cls");
+			break;
+		}
+
+		case 2: {
+			system("cls");
+			for (int i = 0; i < n; i++) {
+				P[i].get_profile();
+			}
+			cout << endl  ;
+			system ("pause");
+			system("cls");
+			break;
+		}
+
+		case 3: {
+			system("cls");
+			string slName;
+			cout << "Enter the last name which you want to find: ";
+			cin >> slName;
+
+			for ( int i = 0; i < n; i++) {
+				if (  (P[i].get_lName ()) == slName)  {
+					P[i].get_profile ();
+				}
+			}
+			cout << endl  ;
+			system ("pause");
+			system("cls");
+			break;
+		}
+
+		case  4: {
+			system("cls");
+			int k;
+			cout << endl << "Input the ordinary nuber of passport of which data you want to change (in diapason 1 - "<<n<< "): ";
+			cin >> k;
+			k -= 1;
+			if ( ( k <= n-1 ) && ( k >= 0) ) {
+				P[k].change_lName();
+			}
+			else cout << endl << "Did you read the condition? Are you a humanitarian???" << endl;
+
+			cout << endl ;
+			system ("pause");
+			system("cls");
+			break;
+		}
+		case 5: {
+			system("cls");
+			for (int i = 0; i < n; i++) {
+				for (int j = i + 1 ; j < n ; j ++) {
+					if ( P[i].get_adress() == P[j].get_adress() ) {
+						P[i].get_profile();
+						cout << endl;
+						P[j].get_profile();
+					}
+				}
+			}
+			cout << endl ;
+			system ("pause");
+			system("cls");
+			break;
+		}
+		case 6: {
+			system("cls");
+			passport_office temp;
+			bool exit = false;
+			while (!exit) {
+				exit = true;
+				for (int i = 0; i < (n - 1); i++) {
+					string name1 = P[i].get_lName();
+					string name2 = P[i+1].get_lName();
+    				char *str1 = new char(name1[0]);
+    				char *str2 = new char(name2[0]);
+					if (  (int)*str1 > (int)*str2) {
+    	 				temp = P[i];
+    	 				P[i] = P[i + 1];
+    	 				P[i + 1] = temp;
+    	 				exit = false;
+    				}
+ 				}
+ 			}
+ 			cout << endl  ;
+			system ("pause");
+			system("cls");
+			break;
+		}
+
+		case 0: {
+			system("cls");
+			cout << "BYE! HAVE A NICE DAY!" << endl;
+			system ("pause");
+			exit(1);
+			break;
+		}
+
+		default : {
+			system("cls");
+			cout << "Error. Input number 0 - 6: " << endl;
+			system ("pause");
+			system("cls");
+			break;
+		}
+	}
+}
+
+	return 0;
+}

@@ -1,0 +1,210 @@
+#include <iostream>
+#include <string.h>
+#include <stdlib.h>
+#include <conio.h>
+
+using namespace std;
+
+const int n = 11;
+
+class FlightBooking {
+
+public:
+	FlightBooking(int id, int capacity, int reserved);
+	void printStatus();
+	void add_reserv ( int res);
+
+	void set_id ( int id1);
+	void set_capacity ( int capacity1);
+	void set_reserved ( int reserved1);
+
+private:
+	int id;
+	int capacity;
+	int reserved;
+};
+
+/*		set functions		*/
+void FlightBooking::set_id ( int id1 ) {
+	FlightBooking::id = id1;
+}
+
+void FlightBooking::set_capacity ( int capacity1 ) {
+	FlightBooking::capacity = capacity1;
+}
+
+void FlightBooking::set_reserved ( int reserved1 ) {
+	FlightBooking::reserved = reserved1 ;
+}
+/*		--------------		*/
+
+void FlightBooking::add_reserv ( int res) {
+	if ( res < 0) res = 0;
+	if ( ( (FlightBooking::reserved+res) * 100 / FlightBooking::capacity) > 105)
+		cout << endl << "Too big reserv value " << endl;
+	else FlightBooking::reserved+=res;
+}
+
+
+void FlightBooking::printStatus() {
+	cout << "Flight " << id << " : " << reserved << " / " << capacity << " ( " << (reserved * 100) / capacity <<" % ) seats reserved" << endl;
+}
+
+/* 			constructor 		*/
+FlightBooking::FlightBooking(int id = 1, int capacity = 1, int reserved = 1)
+{
+	FlightBooking::id = id;
+	FlightBooking::capacity = capacity;
+	while ( ( reserved * 100 / capacity) > 105 ) {
+		cout << endl << "Input the number of reserved seats more  one time: ";
+		cin >> reserved;
+	}
+	if ( reserved < 0 ) reserved = 0;
+	FlightBooking::reserved = reserved;
+}
+
+/*  	string to char function 	  */
+void str_to_ch ( char a[] , string b) {
+	int i = 0;
+	if ( b.length( ) <= n )  {
+		while ( b[ i ] ) {
+			a [ i ] = b [ i ];
+			i++;
+		}
+	}
+}
+
+/*     char to int function    */
+int number ( char s[ ], bool &z) {
+	char *ptr = strtok ( s, "[");
+	ptr = strtok ( NULL, "]");
+		if ( !ptr ) {
+			z = false;
+		}
+		else {
+			return ( atoi (ptr) );
+		}
+}
+
+/*   		 menu function 	 	   */
+string menu ( bool&z , int nr ) {
+	char v [n];
+	cout  << endl <<" \tRESERVING MENU FOR " << nr+1 << " flight " << endl << endl << endl;
+	cout << "Change flight: flight[n]" << endl << endl;
+	cout << "Add some seats : add[n]" << endl << endl;
+	cout << "Cancel reserved seats : cancel[n]" << endl << endl;
+	cout << "Get data about this flight: get" << endl << endl;
+	cout << "Get data about all flights: allg" << endl << endl;
+	cout << "Exit: quit" << endl << endl;
+	cout << ">>>";
+
+	cin.getline ( v , n );
+
+	if ( strstr ( v , "add") || strstr ( v , "cancel") || strstr( v , "quit") ||  strstr( v , "get") || strstr ( v , "flight" ) || strstr ( v , "allg" ) )  {
+		return string( v , sizeof (v) );
+		z = true;
+	}
+		else z=false;
+}
+
+
+/************************** MAIN ***************************/
+
+int main() {
+	system ( "color F0" );
+	/*		additional task		*/
+	cout << "\tHello, user. Welcome in program of our avialine! \n\n If you want to continue input some data:" << endl;
+	int f;
+	cout << "Input the quantity of flights ( We can`t do more that 30 flights/day ): " ;
+	do {
+		cin >> f;
+		if ( ( f < 1 ) || ( f > 30 ) ) cout << endl << "Input quantity of flights more one time: ";
+	}
+	while ( ( f < 1 ) || ( f > 30 ) );
+
+	int reserved = 0, capacity = 0;
+	cout << endl << "Provide capacity of flights ( maximal capacity of our planes is 1400 ): ";
+
+	do {
+		cin >> capacity;
+		if  ( ( capacity > 1400 ) || ( capacity < 1) )  cout << endl << "Input capacity more one time: ";
+	}
+	while ( ( capacity > 1400 ) || ( capacity < 1) );
+
+	cout << endl << "Provide number of reserved seats in flights \n(it will the same, but it could be changed): ";
+	cin >> reserved;
+
+
+	/* creating of array of flights */
+	FlightBooking* booking = new FlightBooking [f];
+
+	for (int i = 0; i < f; i++) {
+		booking[i].set_id( i + 1);
+		booking[i].set_reserved ( reserved );
+		booking[i].set_capacity ( capacity );
+	}
+	/********************************************/
+
+	cout << endl << endl << "Now you will enter in Reserving menu (Press ANY KEY) ";
+	cin.get(); //getch();
+	system ( "cls" );
+	int fln = 0;
+	char s [n] = "1";
+
+	do {
+
+		bool z = true;
+		//cin.get();
+		str_to_ch ( s , menu( z , fln ) );
+
+		if ( strstr ( s,  "add" ) ) {
+			int adding = number (s , z) ;
+			if ( z ) {
+				booking[fln].add_reserv (adding);
+			}
+		}
+
+		else if ( strstr ( s,  "cancel" ) ) {
+			int reserved = number ( s , z);
+			if ( z ) {
+				booking[fln].add_reserv (reserved);
+			}
+		}
+
+		else if ( strstr ( s , "get" ) ) {
+			booking[fln].printStatus();
+		}
+
+		else if ( strstr ( s , "flight" )  ) {
+			fln = number ( s , z) -1;
+			if ( ( fln < 0) || ( fln > f) ) {
+				z = false;
+				fln = 0;
+			}
+		}
+
+		else if ( strstr ( s , "allg" )  ) {
+			for ( int i = 0; i < f; i++ ) {
+				booking[i].printStatus();
+				cout << "---------------------------------------------------" << endl;
+			}
+		}
+
+		else if ( strstr ( s , "quit" ) ) {
+			cout << "\n\t BYE!!! HAVE A NICE DAY!!!" << endl;
+			break;
+		}
+
+		else z = false;
+
+		if (!z) cout << endl << "Cannot perform this operation" << endl;
+		else cout << "\n\tSUCCESS! PRESS ANY KEY TO CONTINUE";
+
+		getch();
+		system ( "cls" );
+	}
+	while ( !strstr( s , "quit") );
+	/*****		*****			*****			*****			*****/
+	delete []booking;
+	return 0;
+}

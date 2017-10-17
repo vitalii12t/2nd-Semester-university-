@@ -1,0 +1,120 @@
+#include <iostream>
+#include <string.h>
+#include <ctype.h>
+#include <stdio.h>
+#include <stdlib.h>
+
+using namespace std;
+
+bool big ( char ip[] ) { // controls if number is in diapasone 0 - 225
+	char *ptr = strtok ( ip , ".");
+
+	if ( ( atoi ( ptr ) ) > 225 ) return false;
+	else {
+		while ( ptr != NULL) {
+			ptr = strtok ( NULL, ".");
+			if ( ( atoi ( ptr ) ) > 225 ) {
+				return false;
+				break;
+			}
+			else return true;
+			}
+	}
+}
+
+/*  counts the quantity of chifres in part */
+
+bool chifr (int num) {
+	int count = 0;
+	while ( num = num / 10 )
+		count++;
+	if ( count > 2 ) return false;
+	else return true;
+}
+/*  controling of quantity of characters in part */
+
+bool characters ( char ip[] ) {
+	char *ptr = strtok ( ip , ".");
+
+	if ( !chifr ( atoi ( ptr ) ) ) return false;
+	else {
+		while ( ptr != NULL) {
+			ptr = strtok ( NULL, ".");
+			if ( !chifr ( atoi ( ptr ) ) ) {
+				return false;
+				break;
+			}
+			else return true;
+			}
+	}
+}
+
+
+ /* controling if all symbols are accesibles */
+bool digs ( char t[] ) {
+	bool l;
+	for ( int i = 0; i < strlen(t); i++) { // it could be realized with switch, I used else if for made the code more short
+		if ( ( isdigit ( t [ i ] ) ) || ( t [ i ] == '.') ) l = true;
+		else {
+			l = false;
+			break;
+		}
+	}
+	if ( l ) return true;
+	else return false;
+}
+
+bool parts ( char t[] ) {
+	char *ptr = strtok ( t , ".");
+	int n = 0;
+
+	while ( ptr != NULL) {
+		ptr = strtok ( NULL, ".");
+		n++;
+	}
+
+	if ( n == 4) return true;
+	else return false;
+}
+
+void control (char ip1[], char ip2[], char ip3[], char ip4[]) {
+	bool p = parts (ip1), d = digs (ip2), c = characters (ip3), b = big (ip4);
+	if ( p && d && c && b) cout << endl<< "Correct IP!" <<endl;
+	if ( !p ) cout << endl << "Too many or too low parts" << endl;
+	if ( !d ) cout << endl << "Only digits and dots allowed" << endl;
+	if ( !c ) cout << endl << "Too many characters in part" << endl;
+	if ( !b ) cout << endl << "Too big value of part" << endl;
+}
+
+void copy ( char ip[], char ip1[]) { // strcpy () didn`t work
+	for ( int i = 0; i < strlen (ip) ; i++) {
+		ip1 [ i ] = ip [ i ];
+	}
+}
+
+int main() {
+	system("color F0");
+	bool z;
+	do {
+		cout << "Input your ip adress: ";
+		char ip [25];
+		cin.getline ( ip,25);
+		char ip1[25], ip2[25], ip3[25], ip4[25];
+		copy ( ip, ip1);
+		copy ( ip, ip2);
+		copy ( ip, ip3);
+		copy ( ip, ip4);
+
+		control (ip1, ip2, ip3, ip4);
+
+		cin.get() ;		//OR "system ( "pause" );" but I like "cin.get();"
+		system ( "cls" );
+		cout << "Do you want to control more one ip? (0 - NO, 1 - YES): " ;
+		cin >> z;
+		cin.get() ;
+		system ( "cls" );
+		if ( z == false) cout << "\tBYE. HAVE A NICE DAY!" << endl;
+	}
+	while (z);
+		return 0;
+}

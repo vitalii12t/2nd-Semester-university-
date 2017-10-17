@@ -1,0 +1,141 @@
+#include <iostream>
+#include <stdlib.h>
+#include <iomanip>
+#include <fstream>
+#include <string.h>
+
+using namespace std;
+
+/*
+	//------------function for reading of matrix from file--------
+float readm (ifstream fin, int n, float** matr)	{
+	for (int i=0;i<n;i++) {
+    	for (int j = 0 ; j < n ; ++j) {
+        	fin >> matr [i][j];
+		}
+	}
+	return 0;
+}
+*/
+	//------------function for outputtiong of matrix--------
+void outpupm (int n, float** matr) {
+	for (int i = 0;  i < n; i++) {
+		for ( int j = 0; j < n; ++j){
+			cout << setw(4) <<setprecision(3) << matr[i][j] << "    ";
+		}
+		cout << endl;
+	}
+}
+
+	//------------function for sorting of matrix------------
+void sortm (int n, float** matr) {
+		float tmp;
+	for(int m = 0; m < n; m++)
+	{
+		for(int l = 0; l < n; l++)
+		{
+			for(int i = 0; i < n; i++)
+			{
+				for(int j = 0; j < n; j++)
+				{
+					if(matr[m][l]<matr[i][j])
+					{
+						tmp=matr[m][l];
+						matr[m][l]=matr[i][j];
+						matr[i][j]=tmp;
+					}
+				}
+			}
+		}
+	}
+}
+
+//-function for finding of first line which has`t positive elements--
+int negl (int n, float** matr) {
+	int line=-1;
+	for (int i=0; i<n; i++){
+		for (int j=0; j<n; j++){
+			if (matr [i][j]>0)
+				break;
+			if (j == (n-1)) {
+				line=i;
+				break;
+			}
+		}
+	}
+	return line;
+}
+// -------------THE MAIN PROGRAM-------------
+int main()
+{
+	//--------------------WORK WITH FILES-------------------
+	//void BindInput( ifstream & inputChannel );
+	ifstream fin("input.txt");
+	if (!fin.is_open())
+	cout << "This file was found" << endl;
+
+	ofstream fout ("output.txt");
+	if (!fout)
+	cout << "Impossible to open output file" << endl;
+
+	//---------- finding of size of matrix-------------
+	int n=0; float tmp;
+	char symbol;
+	while (!fin.eof())
+	{
+		fin.get(symbol);
+		if (symbol == ' ') n++;
+		if (symbol == '\n') break;
+	}
+	n=n+1;
+
+	//again go to the beginning of the file
+	fin.seekg(0, ios::beg);
+	fin.clear();
+	//---------------initialisation of matrix--------------
+
+	float ** matr= new float *[n];
+	for (int i = 0 ; i < n ; ++i ) // initialisation of columns of array
+		matr[i] = new float [n];
+
+	//--------------reading of matrix from file-------------
+	//readm (fin, n, matr);
+
+    for (int i=0;i<n;i++) {
+    	for (int j = 0 ; j < n ; ++j) {
+        	fin >> matr [i][j];
+		}
+	}
+	cout << "Matrix from file: " << endl;
+	outpupm (n, matr);
+
+	//----------------sorting of matrix----------------
+	sortm (n,matr);
+	cout << "\nSorted matrix: " << endl;
+	outpupm (n, matr);
+	cout << endl;
+
+	//------------making of the main diagonal----------
+
+	for (int k = 0; k < n; ++k) {
+		tmp = matr[k][k];
+		matr [k][k] = matr [n-1][k];
+		matr [n-1][k] = tmp;
+	}
+
+
+	cout << "Output matrix:" << endl;
+	outpupm (n, matr);
+
+	if (negl (n, matr) < 0)
+		cout << "\nNo total negative lines in this matrix!" << endl<< endl;
+	else
+		cout << "\nNumber of negative line is" << negl (n, matr) << endl << endl ;
+
+	// deleting of array
+	for (int i = 0; i < n; i++)
+        delete [] matr[i];
+
+	system ("pause");
+	return 0;
+}

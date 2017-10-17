@@ -1,0 +1,116 @@
+#include <iostream>
+#include <conio.h>
+#include <math.h>
+#include <bitset>
+#include <iomanip>
+using namespace std;
+
+int main ()
+{
+	unsigned char a,b;
+	cout << "Vvedit znachennya a = " ;
+	cin >> a;
+	cout << "Vvedit znachennya b = ";
+	cin >> b;
+	bitset <16> A=a, B=b; // Opisuemo pobitovi znachenny zminnih a i b
+	cout << "\nDviykove i desyatkove predstavlennya chysel:\n";
+	
+	cout << setw(2)  << "A = " << A << endl;
+	cout << "a="<< A.to_ulong() << endl;
+	cout << setw(2)  << "B = " << B << endl;
+	cout << "b="<< B.to_ulong() << endl;
+	
+	int zsuv; // Zmynna dlya vyznachennya kilikosti znachenny dlya zsuvu
+	do {
+	cout << "Vvedit znachennya dlya pobitovogo zsuvu (menishe 8 i bilishe 0) ";
+	cin >> zsuv;
+	if (!((zsuv>=1) && (zsuv<8)))
+	  cout << "\nChomu moya programma popala v ruki GUMANITARIU ?!"<< endl;
+	}
+	while (!((zsuv>=1) && (zsuv<8)));
+	char aa,bb; // zminni dlya pobitovo zaminenyh a ta b
+	aa= a << zsuv ;
+	bb= b >> zsuv ;
+	cout << "\nZnachennya pobitovo zminnyh a ta b" << endl;
+	cout << "A = "<< aa<< " = " << (A << zsuv).to_ulong() << endl;
+	cout << "B = "<< bb<< " = " << b<< endl;
+
+	int c; // nova zminna c
+	cout<< "\nVvedit znachennya c= ";
+    cin >> c;
+	bitset <16> C=c;
+    cout << "c = " << C<< " = " << C.to_ulong() << endl;
+    do {
+	cout << "\nVvedit znachennya dlya pobitovogo zsuvu (menishe 8 i bilishe 0) ";
+	cin >> zsuv;
+	if (!((zsuv>=1) & (zsuv<8)))
+	  cout << "\nChomu moya programma popala v ruki GUMANITARIU ?!"<< endl;
+	}
+	while (!((zsuv>=1) & (zsuv<8)));
+
+	C = c >> zsuv;
+	cout << "\nZnachennya c pislya zsuvu" << endl;
+	cout << C<< " = "<< C.to_ulong() << endl;;
+
+	C=~C;
+	cout << " \nZnachennya pislya zaperechennya:"<< endl;
+	cout << " ~C =  "<< C  << " = "<< C.to_ulong()<< endl;
+
+	cout << "\n\nOperation OR:" << endl;
+	cout << "Pobitove: A|B=" <<(A|B) << endl;
+	cout << "Desyatkove: a|b=" << (a|b)<< endl;
+
+	cout << "\n\nOperation AND:" << endl;
+	cout << "Pobitove: A&B=" <<(A&B) << endl;
+	cout << "Desyatkove: a&b=" << (a&b)<< endl;
+
+	cout << "\n\nOperation XOR:" << endl;
+	cout << "Pobitove: A^B=" <<(A^B) << endl;
+	cout << "Desyatkove: a^b=" << (a^b)<< endl <<endl;
+
+	cout << "Logical operations:"<< endl;
+	cout << "a&&b= "<<(a && b) << endl;
+	cout << "a||b= "<< (a||b)<< endl << endl;
+
+	A[7]=1;
+	cout<< "Zminna A pislya zminy v odinitsiu 7 bita:" << endl;
+	cout << "A = " << A << " = " << A.to_ulong() << endl;
+
+	cout << "Zminna B pislya zminy 3 bita na 0: "<< endl;
+	cout << "Dviikovii: " << B.set(3,0) << " = " <<  (B.set(3,0)).to_ulong() << endl;
+
+	cout << "Zminna C pislya zminy 4 bita na protilezniy: "<< endl;
+	C=C.flip(4);
+	cout << C << " = " << C.to_ulong() << endl; ;
+
+	bitset <16> kA=1;      //dly A
+	int onesA=0, zeroA=0; // kilkisti odinitsi
+	for (int i = 0; i < 16; i++) {
+		if ((A&kA) != 0)
+			onesA++;
+		kA=kA << 1;
+		}
+	zeroA = 16-onesA;
+
+	bitset <16> kB=1;      //dly B
+	int onesB=0,zeroB=0; // kilkisti odinitsi
+	for (int i = 0; i < 16; i++) {
+		if ((B&kB) != 0)
+			onesB++;
+		kB=kB << 1;
+		}
+	zeroB=16-onesB;
+
+
+	cout << "Kilkisti 1 ta 0:" << endl;
+	cout << "\nV zminnii A:" << endl;
+	cout << "0 = "<< zeroA <<endl;
+	cout << "1 = " << onesA  << endl;
+
+	cout << "V zminnii B:" << endl;
+	cout << "0 = "<< zeroB  <<endl;
+	cout << "1 = " << onesB  << endl;
+
+    getch ();
+return 0;
+}
