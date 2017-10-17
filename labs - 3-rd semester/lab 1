@@ -1,0 +1,421 @@
+#include <iostream>
+#include <string.h>
+#include <stdlib.h>
+#include <conio.h>
+
+using namespace std;
+
+class product {
+
+protected :
+	string name;
+	string producer;
+	int seqnum; //sequence number
+	int price;
+	int quantity;
+	
+	friend void alarm ( product & );
+
+public:
+
+	product ( string , string , int , int , int ) ;
+	product ( product &p);
+	~product ();
+
+	string get_name ( );
+	string get_producer ( );
+	
+	int get_seqnum ( );
+	int get_price ( );
+	int get_quantity ( );
+	
+	void set_name ( string );
+	void set_producer ( string );
+	void set_seqnum ( int );
+	void set_price ( int  );
+	void set_quantity ( int );
+	void get_data ( );
+
+};
+//===========================================================
+
+class industrial_product : public product {
+
+protected:
+	string trans_cond;
+	string location;
+	
+	friend void alarm ( industrial_product & );
+	
+	friend ostream & operator << ( ostream &s, industrial_product &p ) {
+		s << endl << "name: " << p.name << endl << "producer: " << p.producer << endl << "transporting condition: " << p.trans_cond << "\nlocation: " << p.location << "\nseqency number: " << p.seqnum << "\nprice " << p.price << "\nquantity:" << p.quantity << endl;
+		return s; 
+	}
+ 
+ 
+	friend istream & operator >> ( istream &s, industrial_product &p ) {
+		cout << "Input the name of industial product: ";
+		cin >> p.name;
+		cout << endl <<  "Transporting condition: ";
+		cin >> p.trans_cond;
+		cout << endl << "Location: ";
+		cin >> p.location;
+		cout << endl << "Producer: ";
+		cin >> p.producer;
+		cout << endl << "Sequency number: ";
+		cin >> p.seqnum;
+		cout << endl << "Price: ";
+		cin >> p.price;
+		cout << endl << "Quantity: ";
+		cin >> p.quantity;
+		return s;
+	}
+	
+public: 
+	industrial_product ( string , string , string , string , int , int , int  ) ;
+	industrial_product ( industrial_product &p );
+	~industrial_product ( );
+	
+	void set_trans_cond ( string );
+	void set_location ( string );
+	void get_data ( );
+	
+	
+	string get_trans_cond ( );
+	string get_location ( );
+		
+	industrial_product operator ++ ( int ) {
+		industrial_product t ( this->trans_cond, this->location, this->name, this->producer, this->seqnum, this->price++, this->quantity);
+		return t;
+	}
+	
+	bool operator < ( industrial_product &p1 ) {
+		
+		return ( p1.get_price() < this->price );
+	}
+	
+	
+
+//	friend ostream & operator<< (ostream & output, A & a)
+	
+
+};
+//==========================================================
+
+class foodstuff : public product {
+protected:
+	int manuf_day;
+	int manuf_month;
+	int manuf_year;
+	int expir_day;
+	int expir_month;
+	int expir_year;
+	
+	friend void alarm ( foodstuff &, int, int, int );
+	
+	friend ostream & operator << ( ostream &ss, foodstuff &p ) {
+		ss << endl << "name: " << p.name << endl << "producer: " << p.producer <<  "\nseqency number: " << p.seqnum << "\nprice " << p.price << " $ " <<"\nquantity:" << p.quantity << endl << "manufacturing date: " << p.manuf_day << "/" << p.manuf_month << "/" << p.manuf_year << "\nexpiration date: " << p.expir_day << "/" << p.expir_month << "/" << p.expir_year;
+		return ss; 
+	}
+	
+	 
+	friend istream & operator >> ( istream &s, foodstuff &p ) {
+		cout << "Input the name of foodstuff: ";
+		cin >> p.name;
+		cout << endl <<  "Manufacturing year: ";
+		cin >> p.manuf_day;
+		cout << endl << "Manufacturing Month ";
+		cin >> p.manuf_month;
+		cout << endl << "Manufacturing day: ";
+		cin >> p.manuf_day;
+		cout << endl << "Expiration year: ";
+		cin >> p.expir_year;
+		cout << endl << "Expiration month: ";
+		cin >> p.expir_month;
+		cout << endl << "Expiration day: ";
+		cin >> p.expir_day;
+		cout << endl << "Producer: ";
+		cin >> p.producer;
+		cout << endl << "Sequency number: ";
+		cin >> p.seqnum;
+		cout << endl << "Price: ";
+		cin >> p.price;
+		cout << endl << "Quantity: ";
+		cin >> p.quantity;
+		return s;
+	}
+	
+public:
+	foodstuff (  string , string , int , int , int , int, int, int, int, int, int );
+	foodstuff ( foodstuff &p );
+	~foodstuff ( ) {
+	};
+	void set_manuf_date ( int, int, int );
+	void set_expir_date ( int, int, int );
+	
+	void get_manuf_date ( int &, int &, int & );
+	void get_expir_date ( int &, int &, int & );
+	void get_data ( );
+	
+	foodstuff operator ++ ( int ) {
+		foodstuff t ( this->name, this->producer, this->seqnum, this->price, this->quantity++, this->manuf_day, this->manuf_month, this->manuf_year, this->expir_day, this->expir_month, this->expir_year);
+		return t;
+	}
+	
+	bool operator < ( foodstuff &p1) {
+		bool l;
+		if ( this->expir_year > p1.expir_year ) l = true;
+		else if ( this->expir_month > p1.expir_month  ) l = true;
+		else if ( this->expir_day > p1.expir_day  ) l = true;
+		else l = false;
+		return l;
+	}
+	
+	
+};
+
+
+//=====================================================================================
+int main() {
+	system ( "color F0" );
+	product p ( "iPhone", "Apple", 6524753, 1000, 50);
+	industrial_product ip( "careful", "Stock", "Aluminium", "Random", 1234, 2000, 10000 );
+	industrial_product ip2( "careful", "Stock", "Vibranium", "Random", 1234, 5000, 10000 );
+	foodstuff fp("Bourger", "McDonalds", 234534, 20, 1000, 26, 9, 2018, 1, 10 ,2017);
+	foodstuff fp2("Coca-Cola", "McDonalds", 235432, 20, 1000, 26, 9, 2017, 1, 9 ,2017);
+	
+//	cin >> ip; cout << endl << endl;
+//	cin >> fp; cout << endl << endl;
+	
+	alarm ( p );
+	alarm ( ip );
+	alarm ( fp, 2, 10, 2017 );
+	
+	cout << endl << "====================================================" << endl;
+	cout << "Quantity of " << p.get_name() << " is " << p.get_quantity()  << endl;
+	
+	ip++;
+	cout << "The price of industrial product " << ip.get_name() << " is " << ip.get_price() << endl;
+	
+	bool l = ip < ip2;
+	cout << "The price of industrial product " << ip.get_name() << " is " ;
+	if ( l ) cout << "bigger";
+	else cout << "lower";
+	cout << " that the price of " << ip2.get_name();
+	
+	l = fp < fp2;
+	cout << endl << "To the foodstuff " << fp.get_name() << " remains ";
+	if ( l ) cout << " more ";
+	else cout << " less ";
+	cout << " long expiration date that " << fp2.get_name();
+	
+	
+	cout << endl << "====================================================" << endl;
+	cout << ip << endl << "====================================================" << endl;
+	cout << fp << endl << "====================================================" << endl;
+	cout << endl << "===========================================================" << endl;
+	
+	cout << "\tNow I will use finctions get_data () " << endl << endl;
+	p.get_data();
+	cout<< "====================================================" << endl;
+	
+	ip.get_data();
+	cout<< "====================================================" << endl;
+	
+	fp.get_data();
+	return 0;
+}
+
+
+
+//===================================================================================
+
+
+//----------the dafault constructor----------
+product::product ( string name1 = "default name" , string producer1 = "default producer", int seqnum1 = 0, int price1 = 0, int quantity1 = 0 ) {
+
+	name = name1;
+	producer = producer1;
+	seqnum = seqnum1;
+	price = price1;
+	quantity = quantity1;
+
+}
+
+//---------the copy constructor---------
+product::product ( product &p) {
+	name = p.name;
+	producer = p.producer;
+	seqnum = p.seqnum;
+	price = p.price;
+	quantity = p.quantity;
+}
+
+// --------the destructor---------------
+product::~product () {
+}
+
+//---------get & set functions----------
+string product::get_name ( ) {
+	return product::name;
+}
+
+string product::get_producer ( ) {
+	return product::producer;
+}
+
+int product::get_seqnum ( ) {
+	return this->seqnum;
+}
+
+int product::get_price ( ) {
+	return this->price;
+}
+
+int product::get_quantity ( ) {
+	return this->quantity;
+}
+
+void product::get_data ( ){
+	cout << endl  << "Produvt`s name: " << this -> name;
+	cout << endl << "Producer`s producer: " << this -> producer;
+	cout << endl << "Product`s sequence number: " << this -> seqnum;
+	cout << endl << "Producer`s price: " << this -> price  << " $";
+	cout << endl << "Product`s quantity: " << this -> quantity << endl;
+}
+
+void product::set_name ( string name1 ) {
+	name = name1;
+}
+
+void product::set_producer ( string producer1 ) {
+	producer = producer1;
+}
+
+void product::set_price ( int price1 ) {
+	price = price1;
+}
+//========================================================
+
+//===============INDUSTRIAL PRODUCT METHODS===============
+industrial_product::industrial_product ( string trans_cond1 = "default transporting condition", string location1 = "default location", string name1 = "default name" , string producer1 = "default producer", int seqnum1 = 0, int price1 = 0, int quantity1 = 0 ) : product ( name1 , producer1 , seqnum1 , price1 , quantity1 ) {
+	this -> trans_cond = trans_cond1;
+	this -> location = location1;
+}
+
+industrial_product::industrial_product ( industrial_product &p ) {
+	name = p.name;
+	producer = p.producer;
+	seqnum = p.seqnum;
+	price = p.price;
+	quantity = p.quantity;
+	industrial_product::trans_cond = p.trans_cond;
+	industrial_product::location = p.location;
+}
+
+void industrial_product::set_location ( string s) {
+	location = s ;
+}
+
+void industrial_product::set_trans_cond ( string s ) {
+	trans_cond = s;
+}
+
+string industrial_product::get_trans_cond ( ) {
+	return industrial_product::trans_cond;
+}
+
+string industrial_product::get_location ( ) {
+	return location;
+}
+
+industrial_product::~industrial_product ( ) {
+	
+}
+
+void industrial_product::get_data ( ) {
+	product::get_data();
+	cout << "Location: " << this->location << endl;
+	cout << "Transporting conditions: " << this->trans_cond << endl;
+	
+}
+
+//==================================================
+
+//=============FOOD STUFF METHODS=================
+									
+foodstuff::foodstuff ( string name1 = "default name", string producer1 = "default producer", int seqnum1 = 0, int price1 = 0, int quantity1 = 0, int d_manuf = 1, int m_manuf = 1, int y_manuf = 2017, int e_day = 1, int e_month = 1, int e_year = 2018  ) : product ( name1 , producer1 , seqnum1 , price1 , quantity1 ) {
+	
+	manuf_day = d_manuf;
+	manuf_month = m_manuf;
+	manuf_year = y_manuf;
+	
+	expir_day = e_day;
+	expir_month = e_month;
+	expir_year = e_year;
+	
+}
+
+foodstuff::foodstuff ( foodstuff &p ) {
+	name = p.name;
+	producer = p.producer;
+	seqnum = p.seqnum;
+	price = p.price;
+	quantity = p.quantity;
+	manuf_day = p.manuf_day;
+	manuf_month = p.manuf_month;
+	manuf_year = p.manuf_year;
+	expir_day = p.expir_day;
+	expir_month = p.expir_month;
+	expir_year = p.expir_year;
+} 
+
+void foodstuff::set_manuf_date ( int d, int m , int y ) {
+	manuf_day = d;
+	manuf_month = m;
+	manuf_year = y;
+}
+
+void foodstuff::set_expir_date ( int d , int m , int y ) {
+	expir_day = d;
+	expir_month = m;
+	expir_year = y;
+}
+	
+void foodstuff::get_manuf_date ( int &d, int &m, int &y ) {
+	d = manuf_day;
+	m = manuf_month;
+	y = manuf_year;
+}
+	
+void foodstuff::get_expir_date ( int &d, int &m, int &y ) {
+	d = expir_day;
+	m = expir_month;
+	y = expir_year;
+}
+
+void foodstuff::get_data ( ) {
+	product::get_data();
+	cout << "Manufacturing date: " << manuf_day << "/" << manuf_month << "/" << manuf_year << endl;
+	cout << "Expiration date: " << expir_day << "/" << expir_month << "/" << expir_year << endl;
+	
+}
+
+//==========================================================
+void alarm ( product &p) {
+	cout << endl << "Name of product is " << p.name << endl;
+}
+
+void alarm ( industrial_product &p ) {
+	if ( p.trans_cond == "careful" ) {
+		cout << endl << "Be careful with industial product " << p.name << endl;
+	}
+}
+
+void alarm ( foodstuff &p, int d, int m, int y ) {
+	if ( y > p.expir_year ) cout << endl << "The good " << p.name << "is uprivileged" <<endl;
+	else if ( m > p.expir_month ) cout << endl << "The good " << p.name << "is uprivileged" <<endl;
+	else if ( d > p.expir_day ) cout << endl << "The good " << p.name << "is uprivileged" <<endl;
+} 
+
+
